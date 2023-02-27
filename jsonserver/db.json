@@ -1,0 +1,46 @@
+{
+  "employee": [
+    {
+      "id": 1,
+      "name": "Atthaphon",
+      "email": "634259017@webmail.npru.ac.th",
+      "phone": "0123456789",
+      "status": true
+    },
+    {
+      "id": 2,
+      "name": "Atthaphon",
+      "email": "634259017@webmail.npru.ac.th",
+      "phone": "0123456789",
+      "status": true
+    },
+    {
+      "id": 3,
+      "name": "Atthaphon",
+      "email": "634259017@webmail.npru.ac.th",
+      "phone": "0123456789",
+      "status": true
+    },
+    {
+      "id": 4,
+      "name": "Atthaphon",
+      "email": "634259017@webmail.npru.ac.th",
+      "phone": "0123456789",
+      "status": true
+    },
+    {
+      "id": 5,
+      "name": "Atthaphon",
+      "email": "634259017@webmail.npru.ac.th",
+      "phone": "0123456789",
+      "status": true
+    },
+    {
+      "name": "earth",
+      "email": "earth@earth.com",
+      "phone": "123456789",
+      "status": true,
+      "id": 6
+    }
+  ]
+}
