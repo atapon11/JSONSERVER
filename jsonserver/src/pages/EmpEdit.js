@@ -3,38 +3,41 @@ import { Navigate, Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const EmpEdit = () => {
-  const [id, setId] = useState(" ");
+  const [empData, setEmpData] = useState(null);
+  const [id, setId] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [status, setStatus] = useState(true);
   const [validation, setValidation] = useState("");
   const navigate = useNavigate();
-  const { empId } = useParams();
+  const {empId} = useParams();
 
-  const url = "http://localhost:8000/employee/" + empId;
+ useEffect(() => {
+    axios
+      .get("http://localhost:8000/employee/"+empId) //ใช้เรียกข้อมูลเดิมขึ้นมาแสดง และให้ระบุผ่านไอดี และ set data เพื่อที่จะเตรียมส่งข้อมูลไป อัพเดต
+      .then((res) => {
+        //console.log(res);
+        setId(res.data.id);
+        setEmail(res.data.email);
+        setName(res.data.name);
+        setPhone(res.data.phone);
+        setStatus(res.data.status);
 
-  axios
-    .get(url)
-    .then((response) => {
-      // handle success
-      console.log(response.data);
-      setId(response.data.id);
-      setName(response.data.name);
-      setEmail(response.data.email);
-      setPhone(response.data.phone);
-      setStatus(response.data.status);
-    })
-    .catch((error) => {
-      // handle errors
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+      }); ;
+ }, []);
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8000/employee", { name, email, phone, status })
+      .put("http://localhost:8000/employee/"+empId, { name, email, phone, status }) //นำข้อมูลไปอัพเดตโดยใช้ put แบ่งแยกตาม empId
       .then((res) => {
-        alert("Save Successfully");
+        alert("Save successfully");
         navigate("/");
       })
       .catch((err) => {
@@ -44,12 +47,13 @@ const EmpEdit = () => {
 
   return (
     <div>
+      
       <div className="row">
         <div className="offset-lg-3 col-lg-6">
           <form className="container" onSubmit={handleSubmit}>
             <div className="card" style={{ textAlign: "left" }}>
               <div className="card-title">
-                <h2> Edit Employee</h2>
+                <h2> Create Employee</h2>
               </div>
               <div className="card-body">
                 <div className="row">
@@ -87,9 +91,7 @@ const EmpEdit = () => {
                         onMouseDown={(e) => setValidation(true)}
                       />
                       {email.length === 0 && validation && (
-                        <span className="text-danger">
-                          Please, Enter your email !!
-                        </span>
+                        <span className="text-danger">กรุณากรอก email</span>
                       )}
                     </div>
                   </div>
@@ -109,22 +111,22 @@ const EmpEdit = () => {
                     <div className="form-group">
                       <input
                         type="checkbox"
-                        value={id}
+                        value={status}
                         className="form-check-input"
-                        onChange={(e) => {
-                          setStatus(e.target.checked);
-                        }}
-                      />{" "}
+                      />
                       <label className="form-check-label">is active</label>
                     </div>
                   </div>
                   <div className="col-lg-12">
-                    <button className="btn btn-success" type="submit">
-                      Save
-                    </button>{" "}
-                    <Link to="/" className="btn btn-danger">
-                      Back
-                    </Link>
+                    <div className="form-group">
+                      <button className="btn btn-success" type="submit">
+                        {" "}
+                        Save
+                      </button>{" "}
+                      <Link to="/" className="btn btn-danger">
+                        Back
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -137,3 +139,5 @@ const EmpEdit = () => {
 };
 
 export default EmpEdit;
+
+
